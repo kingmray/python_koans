@@ -17,7 +17,6 @@
 #   about_triangle_project_2.py
 #
 def sum_of_two_sides_greater_than_third(a, b, c):
-	print('a: {0}, b: {1}, c: {2}'.format(a, b, c))
 	if (a + b < c) or (b + c < a) or (a + c < b):
 		return False
 	return True
