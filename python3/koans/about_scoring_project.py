@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from runner.koan import *
-
+from collections import Counter
+from functools import reduce
 # Greed is a dice game where you roll up to five dice to accumulate
 # points.  The following "score" function will be used calculate the
 # score of a single roll of the dice.
@@ -31,10 +32,36 @@ from runner.koan import *
 # More scoring examples are given in the tests below:
 #
 # Your goal is to write the score method.
-
+def singelFive(mylist):
+    result = 0
+    if 5 in mylist:
+        return reduce(lambda x, y: x + y, mylist) * 10
+    if 1 in mylist:
+        return reduce(lambda x, y: x + y, mylist) * 10
+def singleOne(x):
+    if x == 1:
+        return 100
 def score(dice):
     # You need to write this method
-    pass
+    numbers = {}.fromkeys(range(0, 10), 0)
+
+    for d in dice:
+        numbers[d] += 1
+
+    # * A set of three ones is 1000 points
+    sum = (numbers[1] // 3) * 1000
+
+    # * A one (that is not part of a set of three) is worth 100 points.
+    sum += (numbers[1] % 3) * 100
+
+    # * A five (that is not part of a set of three) is worth 50 points.
+    sum += (numbers[5] % 3) * 50
+
+    # * A set of three numbers (other than ones) is worth 100 times the number
+    for r in range(2, 10):
+        sum += (numbers[r] // 3) * 100 * r
+
+    return sum
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
